@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createProject } from "../src/create-project.js";
@@ -31,6 +31,7 @@ describe("createProject", () => {
     const result = await createProject({ cwd: root, name: "demo-app" });
 
     expect(result.projectDir).toBe(join(root, "demo-app"));
+    await expect(stat(join(result.projectDir, ".git"))).resolves.toBeDefined();
 
     const packageJson = await readJson(join(result.projectDir, "package.json"));
     expect(packageJson.scripts).toMatchObject({
@@ -39,6 +40,7 @@ describe("createProject", () => {
       coverage: "bun test --coverage",
       lint: "biome check .",
       typecheck: "tsc --noEmit",
+      prepare: "lefthook install",
       "hooks:install": "lefthook install",
       knip: "knip",
       cpd: "cpd src tests --reporters ai --exit-code 1 --no-tips",

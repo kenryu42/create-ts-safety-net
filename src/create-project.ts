@@ -1,6 +1,8 @@
+import { execFile } from "node:child_process";
 import { mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 
 export type CreateProjectOptions = {
   cwd: string;
@@ -17,6 +19,7 @@ const templateDir = join(
   "templates",
   "base",
 );
+const execFileAsync = promisify(execFile);
 
 export async function createProject(
   options: CreateProjectOptions,
@@ -26,6 +29,7 @@ export async function createProject(
   await copyTemplate(templateDir, projectDir, {
     projectName: options.name,
   });
+  await execFileAsync("git", ["init"], { cwd: projectDir });
 
   return { projectDir };
 }

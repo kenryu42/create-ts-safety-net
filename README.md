@@ -21,7 +21,6 @@ It configures:
 bun create ts-safety-net my-app
 cd my-app
 bun install
-bun run hooks:install
 bun run check
 ```
 
@@ -46,7 +45,9 @@ bun run check
 
 ## Git Hooks
 
-Lefthook runs Biome on staged JS/TS files before commit and runs the full check before push.
+Lefthook runs Biome on staged JS/TS files before commit and runs the full check before push. The creator initializes Git, then the generated project's `prepare` script installs hooks when you run `bun install`.
+
+To reinstall hooks manually:
 
 ```sh
 bun run hooks:install

@@ -11,6 +11,7 @@
     "lint:staged": "biome check --write --",
     "format": "biome check --write .",
     "typecheck": "tsc --noEmit",
+    "prepare": "lefthook install",
     "hooks:install": "lefthook install",
     "knip": "knip",
     "cpd": "cpd src tests --reporters ai --exit-code 1 --no-tips",

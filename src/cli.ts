@@ -14,5 +14,4 @@ console.log(`Created ${result.projectDir}`);
 console.log("Next steps:");
 console.log(`  cd ${name}`);
 console.log("  bun install");
-console.log("  bunx lefthook install");
 console.log("  bun run check");
