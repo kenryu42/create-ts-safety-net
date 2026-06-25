@@ -30,6 +30,12 @@ You can also run the published binary directly:
 bunx create-ts-safety-net my-app
 ```
 
+To include GitHub Actions workflows plus local release scripts:
+
+```sh
+bun create ts-safety-net my-lib --workflow
+```
+
 ## Generated Scripts
 
 ```sh

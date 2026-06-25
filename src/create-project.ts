@@ -7,6 +7,7 @@ import { promisify } from "node:util";
 export type CreateProjectOptions = {
   cwd: string;
   name: string;
+  workflow?: boolean;
 };
 
 export type CreateProjectResult = {
@@ -19,6 +20,12 @@ const templateDir = join(
   "templates",
   "base",
 );
+const workflowTemplateDir = join(
+  dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "templates",
+  "workflow",
+);
 const execFileAsync = promisify(execFile);
 
 export async function createProject(
@@ -29,9 +36,29 @@ export async function createProject(
   await copyTemplate(templateDir, projectDir, {
     projectName: options.name,
   });
+  if (options.workflow) {
+    await copyTemplate(workflowTemplateDir, projectDir, {
+      projectName: options.name,
+    });
+    await addWorkflowScripts(projectDir);
+  }
   await execFileAsync("git", ["init"], { cwd: projectDir });
 
   return { projectDir };
+}
+
+async function addWorkflowScripts(projectDir: string) {
+  const packagePath = join(projectDir, "package.json");
+  const packageJson = JSON.parse(await readFile(packagePath, "utf8"));
+  packageJson.scripts = {
+    ...packageJson.scripts,
+    "lint:ci": "biome ci .",
+    "check:ci":
+      "bun run lint:ci && bun run typecheck && bun test --coverage --coverage-reporter=lcov && bun run knip && bun run cpd",
+    "publish:dry-run": "bun scripts/publish.ts --dry-run",
+    changelog: "bun scripts/changelog.ts",
+  };
+  await writeFile(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`);
 }
 
 async function copyTemplate(
