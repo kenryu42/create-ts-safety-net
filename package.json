@@ -1,6 +1,6 @@
 {
   "name": "create-ts-safety-net",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create a Bun-first TypeScript project with Biome, Knip, cpd, Lefthook, and Bun test preconfigured.",
   "license": "MIT",
   "type": "module",
