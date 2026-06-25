@@ -45,8 +45,8 @@ describe("createProject", () => {
     const packageJson = await readJson(join(result.projectDir, "package.json"));
     expect(packageJson.scripts).toMatchObject({
       test: "bun test",
-      "test:watch": "bun test --watch",
-      coverage: "bun test --coverage",
+      "test:watch": "AGENT=1 bun test --watch",
+      coverage: "AGENT=1 bun test --coverage",
       lint: "biome check .",
       "lint:ci": "biome ci .",
       typecheck: "tsc --noEmit",
@@ -55,9 +55,9 @@ describe("createProject", () => {
       knip: "knip",
       cpd: "cpd src tests --reporters ai --exit-code 1 --no-tips",
       check:
-        "bun run typecheck && bun run lint && bun run knip && bun run cpd && bun test",
+        "bun run typecheck && bun run lint && bun run knip && bun run cpd && AGENT=1 bun test",
       "check:ci":
-        "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && bun test --coverage --coverage-reporter=lcov",
+        "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && AGENT=1 bun test --coverage --coverage-reporter=lcov",
     });
     expect(packageJson.devDependencies).toMatchObject({
       "@biomejs/biome": "latest",
@@ -116,7 +116,7 @@ describe("createProject", () => {
     expect(packageJson.scripts).toMatchObject({
       "lint:ci": "biome ci .",
       "check:ci":
-        "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && bun test --coverage --coverage-reporter=lcov",
+        "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && AGENT=1 bun test --coverage --coverage-reporter=lcov",
       "publish:dry-run": "bun scripts/publish.ts --dry-run",
       changelog: "bun scripts/changelog.ts",
     });

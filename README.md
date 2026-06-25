@@ -41,7 +41,7 @@ bun create ts-safety-net my-lib --workflow
 ```sh
 bun run lint
 bun run typecheck
-bun test
+AGENT=1 bun test
 bun run knip
 bun run cpd
 bun run check

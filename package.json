@@ -58,8 +58,8 @@
     "hooks:install": "lefthook install",
     "knip": "knip",
     "cpd": "cpd --reporters ai --exit-code 1 --no-tips src tests",
-    "check": "bun run typecheck && bun run lint && bun run knip && bun run cpd && bun test",
-    "check:ci": "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && bun test --coverage --coverage-reporter=lcov"
+    "check": "bun run typecheck && bun run lint && bun run knip && bun run cpd && AGENT=1 bun test",
+    "check:ci": "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && AGENT=1 bun test --coverage --coverage-reporter=lcov"
   },
   "devDependencies": {
     "@biomejs/biome": "latest",
