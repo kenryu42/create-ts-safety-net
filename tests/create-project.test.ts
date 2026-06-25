@@ -55,9 +55,9 @@ describe("createProject", () => {
       knip: "knip",
       cpd: "cpd src tests --reporters ai --exit-code 1 --no-tips",
       check:
-        "bun run lint && bun run typecheck && bun test && bun run knip && bun run cpd",
+        "bun run typecheck && bun run lint && bun run knip && bun run cpd && bun test",
       "check:ci":
-        "bun run lint:ci && bun run typecheck && bun test --coverage --coverage-reporter=lcov && bun run knip && bun run cpd",
+        "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && bun test --coverage --coverage-reporter=lcov",
     });
     expect(packageJson.devDependencies).toMatchObject({
       "@biomejs/biome": "latest",
@@ -116,7 +116,7 @@ describe("createProject", () => {
     expect(packageJson.scripts).toMatchObject({
       "lint:ci": "biome ci .",
       "check:ci":
-        "bun run lint:ci && bun run typecheck && bun test --coverage --coverage-reporter=lcov && bun run knip && bun run cpd",
+        "bun run typecheck && bun run lint:ci && bun run knip && bun run cpd && bun test --coverage --coverage-reporter=lcov",
       "publish:dry-run": "bun scripts/publish.ts --dry-run",
       changelog: "bun scripts/changelog.ts",
     });

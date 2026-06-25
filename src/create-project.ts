@@ -52,9 +52,6 @@ async function addWorkflowScripts(projectDir: string) {
   const packageJson = JSON.parse(await readFile(packagePath, "utf8"));
   packageJson.scripts = {
     ...packageJson.scripts,
-    "lint:ci": "biome ci .",
-    "check:ci":
-      "bun run lint:ci && bun run typecheck && bun test --coverage --coverage-reporter=lcov && bun run knip && bun run cpd",
     "publish:dry-run": "bun scripts/publish.ts --dry-run",
     changelog: "bun scripts/changelog.ts",
   };
