@@ -16,11 +16,15 @@ async function getLatestReleasedTag(runner: CommandRunner) {
   }
 }
 
-async function generateChangelog(previousTag: string, runner: CommandRunner) {
+async function generateChangelog(
+  previousTag: string | null,
+  runner: CommandRunner,
+) {
   let log: string;
   try {
-    log =
-      await runner`git log ${previousTag}..HEAD --oneline --format="%h %s"`.text();
+    log = previousTag
+      ? await runner`git log ${previousTag}..HEAD --oneline --format="%h %s"`.text()
+      : await runner`git log HEAD --oneline --format="%h %s"`.text();
   } catch {
     try {
       log = await runner`git log HEAD --oneline --format="%h %s"`.text();
@@ -37,10 +41,6 @@ async function generateChangelog(previousTag: string, runner: CommandRunner) {
 
 export async function buildReleaseNotes(runner: CommandRunner = $) {
   const previousTag = await getLatestReleasedTag(runner);
-  if (!previousTag) {
-    return ["Initial release"];
-  }
-
   const changelog = await generateChangelog(previousTag, runner);
 
   return changelog.length > 0 ? changelog : ["No changes in this release"];
