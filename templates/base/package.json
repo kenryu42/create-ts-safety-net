@@ -1,0 +1,27 @@
+{
+  "name": "{{projectName}}",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "coverage": "bun test --coverage",
+    "lint": "biome check .",
+    "lint:staged": "biome check --write --",
+    "format": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "hooks:install": "lefthook install",
+    "knip": "knip",
+    "cpd": "cpd src tests --reporters ai --exit-code 1 --no-tips",
+    "check": "bun run lint && bun run typecheck && bun test && bun run knip && bun run cpd"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@types/bun": "latest",
+    "cpd": "latest",
+    "knip": "latest",
+    "lefthook": "latest",
+    "typescript": "latest"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "name": "create-ts-safety-net",
+  "version": "0.1.0",
+  "description": "Create a Bun-first TypeScript project with Biome, Knip, cpd, Lefthook, and Bun test preconfigured.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "bun@1.3.14",
+  "engines": {
+    "bun": ">=1.3.0"
+  },
+  "bin": {
+    "create-ts-safety-net": "dist/cli.js"
+  },
+  "main": "./dist/create-project.js",
+  "types": "./dist/create-project.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/create-project.d.ts",
+      "import": "./dist/create-project.js"
+    }
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenryu42/create-ts-safety-net.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kenryu42/create-ts-safety-net/issues"
+  },
+  "homepage": "https://github.com/kenryu42/create-ts-safety-net#readme",
+  "keywords": [
+    "bun",
+    "typescript",
+    "biome",
+    "knip",
+    "cpd",
+    "lefthook",
+    "starter",
+    "create"
+  ],
+  "author": {
+    "name": "J Liew",
+    "email": "jliew@420024lab.com"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:staged": "biome check --write --",
+    "format": "biome check --write .",
+    "clean": "rm -rf dist",
+    "build": "bun run clean && tsc -p tsconfig.build.json && chmod 755 dist/cli.js",
+    "prepack": "bun run check && bun run build",
+    "hooks:install": "lefthook install",
+    "knip": "knip",
+    "cpd": "cpd --reporters ai --exit-code 1 --no-tips src tests",
+    "check": "bun run lint && bun run typecheck && bun test && bun run knip && bun run cpd"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@types/bun": "latest",
+    "cpd": "latest",
+    "knip": "latest",
+    "lefthook": "latest",
+    "typescript": "latest"
+  }
+}
